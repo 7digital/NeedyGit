@@ -11,7 +11,7 @@ class Dependency
 		sh "#{@git} pull"
 		sh "#{@git} add #{folder}"
 		
-		message = system("#{@git} status #{folder}")
+		message = `#{@git} status #{folder}`
 		puts message
 		return if message.include?('nothing to commit')
 		
