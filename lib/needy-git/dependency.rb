@@ -11,12 +11,7 @@ class Dependency
 		sh "#{@git} pull"
 		sh "#{@git} add #{folder}"
 		
-		message = `#{@git} status #{folder}`
-		puts message
-		return if message.include?('nothing to commit')
-		
-		sh "#{@git} commit #{folder} --author=\"#{@author}\" -m \"Dependency Auto Commit. Build number #{build_number}.\""
-		sh "#{@git} push"			
+		commit_and_push(folder)	unless nothing_to_commit(folder)
 	end
 	
 	def update_submodule(folder)
@@ -26,10 +21,24 @@ class Dependency
 		Dir.chdir(folder)
 
 		sh "#{@git} pull origin master"
+		
+		commit_and_push(folder) unless nothing_to_commit(folder)
+		
 		Dir.chdir(root_dir)	
 	end
 	
 	private
+	
+	def nothing_to_commit(folder)
+		message = `#{@git} status #{folder}`
+		puts message
+		return message.include?('nothing to commit')		
+	end
+	
+	def commit_and_push(folder)
+		sh "#{@git} commit #{folder} --author=\"#{@author}\" -m \"Dependency Auto Commit. Build number #{build_number}.\""
+		sh "#{@git} push"		
+	end
 	
 	def build_number
 		return ENV["BUILD_NUMBER"].nil? ? 'N/A' : ENV["BUILD_NUMBER"]
