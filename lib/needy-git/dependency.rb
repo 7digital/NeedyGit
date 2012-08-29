@@ -18,13 +18,12 @@ class Dependency
 		sh "#{@git} submodule update --init"
 		sh "#{@git} submodule update"
 		root_dir = Dir.pwd
+		
 		Dir.chdir(folder)
-
-		sh "#{@git} pull origin master"
+		sh "#{@git} pull origin master"		
+		Dir.chdir(root_dir)	
 		
 		commit_and_push(folder) unless nothing_to_commit(folder)
-		
-		Dir.chdir(root_dir)	
 	end
 	
 	private
