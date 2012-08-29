@@ -23,6 +23,7 @@ class Dependency
 		sh "#{@git} pull origin master"		
 		Dir.chdir(root_dir)	
 		
+		sh "#{@git} pull"
 		commit_and_push(folder) unless nothing_to_commit(folder)
 	end
 	

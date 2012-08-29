@@ -39,6 +39,9 @@ describe Dependency do
 			# pull on the submodule
 			@dependency.expects(:sh).with('git pull origin master')	
 			
+			# on the repository to merge the changes
+			@dependency.expects(:sh).with('git pull')	
+			
 			# it returns back to the default dir
 			Dir.expects(:chdir).with('myfolder')
 			Dir.expects(:chdir).with(Dir.pwd)
