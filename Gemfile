@@ -8,4 +8,4 @@ group :development do
   gem 'jeweler', '1.8.3'
 end
 
-gem 'rake'
+gem 'rake', '0.9.2.2'
